@@ -1,0 +1,142 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:google_sing_in_with_firebase/services/authServices.dart';
+import 'package:google_sing_in_with_firebase/view/homescreenview.dart';
+import 'package:google_sing_in_with_firebase/widgets/customButtonWidget.dart';
+import 'package:google_sing_in_with_firebase/widgets/customTextField.dart';
+
+class GoogleSingInWithFlutter extends StatefulWidget {
+  const GoogleSingInWithFlutter({super.key});
+
+  @override
+  State<GoogleSingInWithFlutter> createState() =>
+      _GoogleSingInWithFlutterState();
+}
+
+class _GoogleSingInWithFlutterState extends State<GoogleSingInWithFlutter> {
+  AuthServices _authServices = AuthServices();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
+  static final GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: ['email', 'profile'],
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 188, 188, 188),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Container(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 120,
+                ),
+                Icon(
+                  Icons.lock_open,
+                  color: const Color.fromARGB(255, 62, 62, 62).withOpacity(0.8),
+                  size: 45,
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 30, bottom: 15),
+                  child: Text(
+                    "Welcome Back, You've been missed!",
+                    style: TextStyle(
+                        color: const Color.fromARGB(255, 113, 113, 113),
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                CustomTextField(
+                    hintText: 'Enter Your Email',
+                    icon: Icons.email,
+                    controller: email),
+                SizedBox(
+                  height: 5,
+                ),
+                CustomTextField(
+                    hintText: 'Enter Password',
+                    icon: Icons.lock,
+                    controller: password),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: CustomButtonWidget(
+                      ontap: () async {
+                        try {
+                          await _authServices.signOut();
+                        } catch (e) {
+                          print(e);
+                        }
+                      },
+                      title: 'Sign In'),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [Text('Not a member?'), Text('Register Now')],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: InkWell(
+                    onTap: () async {
+                      final User? user = await _authServices.signInWithGoolge();
+                      print(user!.displayName);
+                      if (user!=Null) {
+                         Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomeScreenView(
+                                  userid: user.uid,
+                                  name: user!.displayName.toString(),
+                                  email: user!.email.toString(),
+                                  dp: user!.photoURL.toString(),
+                                  isEmailVerified:
+                                      user!.emailVerified.toString()),
+                            ));
+                      }else{
+                      
+                      }
+                     
+                    },
+                    child: Container(
+                      // width: 240,
+                      height: 40,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            width: 1.5,
+                            color: Colors.grey,
+                          )),
+                      child: Center(
+                          child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 25,
+                            height: 30,
+                            decoration: BoxDecoration(),
+                          ),
+                          Text(' Continue With Google'),
+                        ],
+                      )),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
