@@ -10,7 +10,7 @@ class AuthServices {
     //begin interactive sign in process
     final GoogleSignInAccount? guser = await _googleSignIn.signIn();
     if (guser == null) {
-      return Null;
+      return null;
     }
     //obtain auth detail from request
     final GoogleSignInAuthentication gAuth = await guser!.authentication;

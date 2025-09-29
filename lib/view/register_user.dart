@@ -1,29 +1,20 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:google_sing_in_with_firebase/services/authServices.dart';
-import 'package:google_sing_in_with_firebase/utils/notification.dart';
-import 'package:google_sing_in_with_firebase/view/homescreenview.dart';
-import 'package:google_sing_in_with_firebase/view/register_user.dart';
+import 'package:google_sing_in_with_firebase/view/google_sign_in.dart';
 import 'package:google_sing_in_with_firebase/widgets/customButtonWidget.dart';
 import 'package:google_sing_in_with_firebase/widgets/customTextField.dart';
 
-class GoogleSingInWithFlutter extends StatefulWidget {
-  const GoogleSingInWithFlutter({super.key});
+class RegisterUser extends StatefulWidget {
+  const RegisterUser({super.key});
 
   @override
-  State<GoogleSingInWithFlutter> createState() =>
-      _GoogleSingInWithFlutterState();
+  State<RegisterUser> createState() => _RegisterUserState();
 }
 
-class _GoogleSingInWithFlutterState extends State<GoogleSingInWithFlutter> {
-  AuthServices _authServices = AuthServices();
+class _RegisterUserState extends State<RegisterUser> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-  static final GoogleSignIn _googleSignIn = GoogleSignIn(
-    scopes: ['email', 'profile'],
-  );
-
+  TextEditingController name = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,12 +41,19 @@ class _GoogleSingInWithFlutterState extends State<GoogleSingInWithFlutter> {
                 Padding(
                   padding: const EdgeInsets.only(top: 30, bottom: 15),
                   child: Text(
-                    "Welcome Back, You've been missed!",
+                    "Welcome!, Join Us Now",
                     style: TextStyle(
                         color: const Color.fromARGB(255, 113, 113, 113),
                         fontSize: 14,
                         fontWeight: FontWeight.bold),
                   ),
+                ),
+                CustomTextField(
+                    hintText: 'Enter Your Name',
+                    icon: Icons.person_2,
+                    controller: name),
+                SizedBox(
+                  height: 5,
                 ),
                 CustomTextField(
                     hintText: 'Enter Your Email',
@@ -70,14 +68,14 @@ class _GoogleSingInWithFlutterState extends State<GoogleSingInWithFlutter> {
                     controller: password),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: CustomButtonWidget(ontap: () {}, title: 'Sign In'),
+                  child: CustomButtonWidget(ontap: () {}, title: 'Sign Up'),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Not a member?'),
+                      Text('Have an Account?'),
                       SizedBox(
                         width: 10,
                       ),
@@ -86,36 +84,18 @@ class _GoogleSingInWithFlutterState extends State<GoogleSingInWithFlutter> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => RegisterUser(),
+                                  builder: (context) =>
+                                      GoogleSingInWithFlutter(),
                                 ));
                           },
-                          child: Text('Register Now'))
+                          child: Text('Sign In'))
                     ],
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: InkWell(
-                    onTap: () async {
-                      final User? user = await _authServices.signInWithGoolge();
-
-                      if (user != null) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomeScreenView(
-                                  userid: user!.uid,
-                                  name: user!.displayName.toString(),
-                                  email: user!.email.toString(),
-                                  dp: user!.photoURL.toString(),
-                                  isEmailVerified:
-                                      user!.emailVerified.toString()),
-                            ));
-                      } else {
-                        ShowNotification.customNotifcation(
-                            context, 'Sign In Canceled');
-                      }
-                    },
+                    onTap: () async {},
                     child: Container(
                       // width: 240,
                       height: 40,
