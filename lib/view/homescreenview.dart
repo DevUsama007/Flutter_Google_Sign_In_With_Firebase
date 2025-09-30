@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_sing_in_with_firebase/services/authServices.dart';
 import 'package:google_sing_in_with_firebase/utils/notification.dart';
+import 'package:google_sing_in_with_firebase/view/update_password_screen.dart';
 
 class HomeScreenView extends StatefulWidget {
   String userid;
@@ -27,6 +28,37 @@ class _HomeScreenViewState extends State<HomeScreenView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 188, 188, 188),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(10),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UpdatePasswordScreen(
+                    email: widget.email,
+                  ),
+                ));
+          },
+          child: Card(
+              color: Colors.white.withOpacity(0.4),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 30,
+                  margin: EdgeInsets.only(left: 90, top: 10),
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: Text(
+                    'Update Password',
+                    style: TextStyle(
+                        color: const Color.fromARGB(255, 248, 240, 240),
+                        fontWeight: FontWeight.w600),
+                  ),
+                ),
+              )),
+        ),
+      ),
       appBar: AppBar(
         backgroundColor: Colors.grey,
         automaticallyImplyLeading: false,
@@ -64,88 +96,98 @@ class _HomeScreenViewState extends State<HomeScreenView> {
               ? Container()
               : Padding(
                   padding: const EdgeInsets.all(15.0),
-                  child: Container(
-                    decoration:
-                        BoxDecoration(color: Colors.grey.withOpacity(0.5)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          widget.dp == 'notAvailable'
-                              ? CircleAvatar(
-                                  radius: 60,
-                                )
-                              : CircleAvatar(
-                                  backgroundImage: NetworkImage(widget.dp),
-                                  backgroundColor: Colors.grey,
-                                  radius: 60,
+                  child: Card(
+                    color: Colors.white.withOpacity(0.4),
+                    child: Container(
+                      // decoration:
+                      //     BoxDecoration(color: Colors.grey.withOpacity(0.5)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            widget.dp == 'notAvailable'
+                                ? CircleAvatar(
+                                    radius: 60,
+                                  )
+                                : CircleAvatar(
+                                    backgroundImage: NetworkImage(widget.dp),
+                                    backgroundColor: Colors.grey,
+                                    radius: 60,
+                                  ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "UserID:",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
                                 ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                "UserID:",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 17),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  overflow: TextOverflow.ellipsis,
-                                  widget.userid,
+                                Expanded(
+                                  child: Text(
+                                    overflow: TextOverflow.ellipsis,
+                                    widget.userid,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 17),
+                                  ),
+                                )
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "Name:",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
+                                ),
+                                Text(
+                                  widget.name,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 17),
+                                )
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "Email:",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
                                 ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                "Name:",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 17),
-                              ),
-                              Text(
-                                widget.name,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w400, fontSize: 17),
-                              )
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                "Email:",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 17),
-                              ),
-                              Text(
-                                widget.email,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w400, fontSize: 17),
-                              )
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                "Email Verified:",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 17),
-                              ),
-                              Text(
-                                widget.isEmailVerified,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w400, fontSize: 17),
-                              )
-                            ],
-                          ),
-                        ],
+                                Text(
+                                  widget.email,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 17),
+                                )
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "Email Verified:",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
+                                ),
+                                Text(
+                                  widget.isEmailVerified,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 17),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

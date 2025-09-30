@@ -40,10 +40,17 @@ class _GoogleSingInWithFlutterState extends State<GoogleSingInWithFlutter> {
                 SizedBox(
                   height: 120,
                 ),
-                Icon(
-                  Icons.lock_open,
-                  color: const Color.fromARGB(255, 62, 62, 62).withOpacity(0.8),
-                  size: 45,
+                Card(
+                  color: Colors.white.withOpacity(0.4),
+                  child: Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Icon(
+                      Icons.lock_open,
+                      color: const Color.fromARGB(255, 62, 62, 62)
+                          .withOpacity(0.8),
+                      size: 45,
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: 50,
@@ -125,51 +132,55 @@ class _GoogleSingInWithFlutterState extends State<GoogleSingInWithFlutter> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: InkWell(
-                    onTap: () async {
-                      final User? user = await _authServices.signInWithGoolge();
-                      ShowNotification.customNotifcation(
-                          context, 'Register User');
-                      if (user != null) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomeScreenView(
-                                  userid: user!.uid,
-                                  name: user!.displayName.toString(),
-                                  email: user!.email.toString(),
-                                  dp: user!.photoURL.toString(),
-                                  isEmailVerified:
-                                      user!.emailVerified.toString()),
-                            ));
-                      } else {
+                Card(
+                  color: Colors.white.withOpacity(0.4),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: InkWell(
+                      onTap: () async {
+                        final User? user =
+                            await _authServices.signInWithGoolge();
                         ShowNotification.customNotifcation(
-                            context, 'Sign In Canceled');
-                      }
-                    },
-                    child: Container(
-                      // width: 240,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            width: 1.5,
-                            color: Colors.grey,
-                          )),
-                      child: Center(
-                          child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 25,
-                            height: 30,
-                            decoration: BoxDecoration(),
-                          ),
-                          Text(' Continue With Google'),
-                        ],
-                      )),
+                            context, 'Register User');
+                        if (user != null) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HomeScreenView(
+                                    userid: user!.uid,
+                                    name: user!.displayName.toString(),
+                                    email: user!.email.toString(),
+                                    dp: user!.photoURL.toString(),
+                                    isEmailVerified:
+                                        user!.emailVerified.toString()),
+                              ));
+                        } else {
+                          ShowNotification.customNotifcation(
+                              context, 'Sign In Canceled');
+                        }
+                      },
+                      child: Container(
+                        // width: 240,
+                        height: 40,
+                        // decoration: BoxDecoration(
+                        // borderRadius: BorderRadius.circular(10),
+                        // border: Border.all(
+                        //   width: 1.5,
+                        //   // color: Colors.grey,
+                        // )),
+                        child: Center(
+                            child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 25,
+                              height: 30,
+                              decoration: BoxDecoration(),
+                            ),
+                            Text(' Continue With Google'),
+                          ],
+                        )),
+                      ),
                     ),
                   ),
                 ),

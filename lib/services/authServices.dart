@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:google_sing_in_with_firebase/services/helper/updatePasswordErrorHelper.dart';
 import 'package:google_sing_in_with_firebase/utils/notification.dart';
 import 'package:google_sing_in_with_firebase/view/homescreenview.dart';
 
@@ -136,6 +137,41 @@ class AuthServices {
     } on FirebaseAuthException catch (e) {
       print(e.message);
       ShowNotification.customNotifcation(context, e.message.toString());
+    }
+  }
+
+  updatePassword(BuildContext context, String email, String oldPass,
+      String newPass) async {
+    try {
+      final user = _firebaseAuth.currentUser;
+      if (user == null) {
+        throw Exception('No user is currently signed in');
+      }
+      if (user.email == null) {
+        throw Exception('User email not available');
+      }
+      if (user.email != email) {
+        ShowNotification.customNotifcation(context, 'Email not matched');
+        return;
+      }
+      // Step 1: Reauthenticate user (security requirement)
+      final credential = EmailAuthProvider.credential(
+        email: user.email!,
+        password: oldPass.toString(),
+      );
+      await user.reauthenticateWithCredential(credential);
+
+      // Step 2: Update to new password
+      await user.updatePassword(newPass.toString()).then(
+        (value) {
+          ShowNotification.customNotifcation(
+              context, 'Password Update Successfuly');
+        },
+      );
+    } on FirebaseAuthException catch (e) {
+      String errorMessage =
+          UpdatePasswordErrorHandle.getChangePasswordErrorMessage(e);
+      ShowNotification.customNotifcation(context, errorMessage.toString());
     }
   }
 }
