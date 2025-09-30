@@ -118,4 +118,24 @@ class AuthServices {
       ShowNotification.customNotifcation(context, message.toString());
     }
   }
+
+  forgotPassword(BuildContext context, String email) async {
+    try {
+      await _firebaseAuth
+          .sendPasswordResetEmail(email: email.toString().trim())
+          .then(
+        (value) {
+          ShowNotification.customNotifcation(
+              context, 'Forgot password email sent ');
+        },
+      ).onError(
+        (error, stackTrace) {
+          print(error.toString());
+        },
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+      ShowNotification.customNotifcation(context, e.message.toString());
+    }
+  }
 }

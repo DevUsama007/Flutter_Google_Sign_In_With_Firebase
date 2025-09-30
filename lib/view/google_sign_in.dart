@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:google_sing_in_with_firebase/services/authServices.dart';
 import 'package:google_sing_in_with_firebase/utils/notification.dart';
+import 'package:google_sing_in_with_firebase/view/forgot_password_screen.dart';
 import 'package:google_sing_in_with_firebase/view/homescreenview.dart';
 import 'package:google_sing_in_with_firebase/view/register_user.dart';
 import 'package:google_sing_in_with_firebase/widgets/customButtonWidget.dart';
@@ -74,28 +75,53 @@ class _GoogleSingInWithFlutterState extends State<GoogleSingInWithFlutter> {
                       ontap: () async {
                         await _authServices.signInWithEmailPassword(context,
                             email.text.toString(), password.text.toString());
-                      
                       },
                       title: 'Sign In'),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Not a member?'),
-                      SizedBox(
-                        width: 10,
-                      ),
                       InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => RegisterUser(),
-                                ));
-                          },
-                          child: Text('Register Now'))
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ForgotPasswordScreen(),
+                              ));
+                        },
+                        child: Text(
+                          'Forgot Password',
+                          style: TextStyle(fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'Not a member?',
+                            style: TextStyle(
+                                color: const Color.fromARGB(255, 113, 113, 113),
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => RegisterUser(),
+                                    ));
+                              },
+                              child: Text(
+                                'Register',
+                                style: TextStyle(fontWeight: FontWeight.w700),
+                              ))
+                        ],
+                      ),
                     ],
                   ),
                 ),
