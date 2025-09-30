@@ -58,19 +58,25 @@ class _GoogleSingInWithFlutterState extends State<GoogleSingInWithFlutter> {
                   ),
                 ),
                 CustomTextField(
-                    hintText: 'Enter Your Email',
+                    hintText: 'e.g uuusama0026@gmail.com ',
                     icon: Icons.email,
                     controller: email),
                 SizedBox(
                   height: 5,
                 ),
                 CustomTextField(
-                    hintText: 'Enter Password',
+                    hintText: 'Usama123',
                     icon: Icons.lock,
                     controller: password),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: CustomButtonWidget(ontap: () {}, title: 'Sign In'),
+                  child: CustomButtonWidget(
+                      ontap: () async {
+                        await _authServices.signInWithEmailPassword(context,
+                            email.text.toString(), password.text.toString());
+                      
+                      },
+                      title: 'Sign In'),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
@@ -98,7 +104,8 @@ class _GoogleSingInWithFlutterState extends State<GoogleSingInWithFlutter> {
                   child: InkWell(
                     onTap: () async {
                       final User? user = await _authServices.signInWithGoolge();
-
+                      ShowNotification.customNotifcation(
+                          context, 'Register User');
                       if (user != null) {
                         Navigator.push(
                             context,

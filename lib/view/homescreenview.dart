@@ -73,11 +73,15 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          CircleAvatar(
-                            backgroundImage: NetworkImage(widget.dp),
-                            backgroundColor: Colors.grey,
-                            radius: 60,
-                          ),
+                          widget.dp == 'notAvailable'
+                              ? CircleAvatar(
+                                  radius: 60,
+                                )
+                              : CircleAvatar(
+                                  backgroundImage: NetworkImage(widget.dp),
+                                  backgroundColor: Colors.grey,
+                                  radius: 60,
+                                ),
                           SizedBox(
                             height: 30,
                           ),

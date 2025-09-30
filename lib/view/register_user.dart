@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:google_sing_in_with_firebase/services/authServices.dart';
+import 'package:google_sing_in_with_firebase/utils/notification.dart';
 import 'package:google_sing_in_with_firebase/view/google_sign_in.dart';
+import 'package:google_sing_in_with_firebase/view/homescreenview.dart';
 import 'package:google_sing_in_with_firebase/widgets/customButtonWidget.dart';
 import 'package:google_sing_in_with_firebase/widgets/customTextField.dart';
 
@@ -12,6 +16,7 @@ class RegisterUser extends StatefulWidget {
 }
 
 class _RegisterUserState extends State<RegisterUser> {
+  AuthServices _authServices = AuthServices();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController name = TextEditingController();
@@ -68,7 +73,37 @@ class _RegisterUserState extends State<RegisterUser> {
                     controller: password),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: CustomButtonWidget(ontap: () {}, title: 'Sign Up'),
+                  child: CustomButtonWidget(
+                      ontap: () async {
+                        final User? authuser =
+                            await _authServices.signUpWithEmailPassword(
+                                context,
+                                email.text.toString(),
+                                password.text.toString(),
+                                name.text.toString());
+                        final user = FirebaseAuth.instance.currentUser;
+                        if (!user!.emailVerified) {
+                          ShowNotification.customNotifcation(context,
+                              'You Account is not verified yet check email');
+                        } else {
+                          if (authuser == null) {
+                            ShowNotification.customNotifcation(
+                                context, 'error in register');
+                          } else {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HomeScreenView(
+                                      userid: authuser.uid.toString(),
+                                      name: 'Not Available',
+                                      email: authuser.email.toString(),
+                                      dp: "notAvailable",
+                                      isEmailVerified: 'true'),
+                                ));
+                          }
+                        }
+                      },
+                      title: 'Sign Up'),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
@@ -95,7 +130,29 @@ class _RegisterUserState extends State<RegisterUser> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: InkWell(
-                    onTap: () async {},
+                    onTap: () async {
+                      final User? user = await _authServices.signInWithGoolge();
+                     
+                      if (user != null) {
+                         ShowNotification.customNotifcation(
+                            context, 'Register User');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomeScreenView(
+                                  userid: user!.uid,
+                                  name: user!.displayName.toString(),
+                                  email: user!.email.toString(),
+                                  dp: user!.photoURL.toString(),
+                                  isEmailVerified:
+                                      user!.emailVerified.toString()),
+                            ));
+                            
+                      } else {
+                        ShowNotification.customNotifcation(
+                            context, 'Sign In Canceled');
+                      }
+                    },
                     child: Container(
                       // width: 240,
                       height: 40,
