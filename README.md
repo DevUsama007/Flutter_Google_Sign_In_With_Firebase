@@ -22,13 +22,7 @@ by doing this your basic setup is ready for the android.
 
 for more detail you can visit 
 
-- [Google Sign In For Web ](https://docs.flutter.dev/cookbook)
-
-
-
-
-
-- ([Google Sign In For Web](https://pub.dev/packages/google_sign_in_android#integration))
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- [Google Sign In For Web](https://pub.dev/packages/google_sign_in_android#integration)
+- [Google Sign In IOS](https://pub.dev/packages/google_sign_in_ios#macos-integration)
 
 
