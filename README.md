@@ -9,6 +9,7 @@ That is the comprehensive guide for the Google Sign in and Firebase Authenticati
 
 
 //command for SHA1 AND SHA2 
+
 keytool -list -v -alias androiddebugkey -keystore "$env:USERPROFILE\.android\debug.keystore"
 
 
