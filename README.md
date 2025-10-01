@@ -11,16 +11,24 @@ That is the comprehensive guide for the Google Sign in and Firebase Authenticati
 
 🌟 In FirebaseProject go in Authentication>sign-in-method> and enable the Email/Password and GoogleSignIn Provider 
 
-//command for SHA1 AND SHA2 
+🌟 Run that command in your flutter project terminal it will give you SHA1 AND SHA2 
 ```bash
 keytool -list -v -alias androiddebugkey -keystore "$env:USERPROFILE\.android\debug.keystore"
 ```
 
+🌟 In firebae project go to projectOverview and in genral add click on add finger prints and add the SHA1 and SHA2
+
+by doing this your basic setup is ready for the android.
+
+for more detail you can visit 
+
+- [Google Sign In For Web ](https://docs.flutter.dev/cookbook)
 
 
 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+
+- ([Google Sign In For Web](https://pub.dev/packages/google_sign_in_android#integration))
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
 
