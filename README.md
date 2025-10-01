@@ -25,4 +25,23 @@ for more detail you can visit
 - [Google Sign In For Web](https://pub.dev/packages/google_sign_in_android#integration)
 - [Google Sign In IOS](https://pub.dev/packages/google_sign_in_ios#macos-integration)
 
+## Feature
+
+This Repo include the following 
+
+🌟Multiple Authentication Methods
+
+🌟Sign In With Google
+
+🌟Sign In With Email/Password
+
+🌟Email Verification Setup
+
+🌟Register with Email/Password
+
+🌟Account linking 
+
+🌟Forgot Password
+
+🌟Update Password
 
