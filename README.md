@@ -1,6 +1,16 @@
-# google_sing_in_with_firebase
+# Sign In With Google using Firebase
 
-A new Flutter project.
+![Flutter](https://img.shields.io/badge/Flutter-3.22-blue?logo=flutter)
+![FirebaseAuth](https://img.shields.io/badge/%20firebase_auth-6.1.0-blue)
+![GoogleSignIn](https://img.shields.io/badge/google_sign_in-6.2.2-accentblue)
+
+That is the comprehensive guide for the Google Sign in and Firebase Authentication .
+
+
+
+//command for SHA1 AND SHA2 
+keytool -list -v -alias androiddebugkey -keystore "$env:USERPROFILE\.android\debug.keystore"
+
 
 ## Getting Started
 
